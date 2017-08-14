@@ -911,6 +911,7 @@ public class ArrayList<E> extends AbstractList<E>
      * <p>
      * <p>The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
      *
+     * 迭代器，没有数据变化的情况下，如果变了，马德吉，就垃圾吧倒吧
      * @return an iterator over the elements in this list in proper sequence
      */
     public Iterator<E> iterator() {
