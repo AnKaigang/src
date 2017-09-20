@@ -415,6 +415,9 @@ public interface List<E> extends Collection<E> {
     }
 
     /**
+     *
+     * 对list进行排序，先将list转为array数组，然后根据特定字段进行排序
+     * 排序完成之后进行遍历
      * Sorts this list according to the order induced by the specified
      * {@link Comparator}.
      *

@@ -1198,6 +1198,8 @@ public class Arrays {
     }
 
     /**
+     *
+     * 对数组进行排序，元素必须实现了compare接口
      * Sorts the specified array of objects into ascending order, according
      * to the {@linkplain Comparable natural ordering} of its elements.
      * All elements in the array must implement the {@link Comparable}
@@ -1240,6 +1242,7 @@ public class Arrays {
      *         {@link Comparable} contract
      */
     public static void sort(Object[] a) {
+        //如果系统设置了使用旧的排序方法，则使用legacyMergeSort
         if (LegacyMergeSort.userRequested)
             legacyMergeSort(a);
         else
@@ -1327,6 +1330,7 @@ public class Arrays {
     private static final int INSERTIONSORT_THRESHOLD = 7;
 
     /**
+     * 归并排序，对于长度大于7的采用归并，小于7的冒泡
      * Src is the source array that starts at index 0
      * Dest is the (possibly larger) array destination with a possible offset
      * low is the index in dest to start sorting
@@ -1343,6 +1347,7 @@ public class Arrays {
         int length = high - low;
 
         // Insertion sort on smallest arrays
+        //如果长度小于7，则直接对dest进行冒泡排序
         if (length < INSERTIONSORT_THRESHOLD) {
             for (int i=low; i<high; i++)
                 for (int j=i; j>low &&
