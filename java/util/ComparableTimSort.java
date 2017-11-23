@@ -186,6 +186,7 @@ class ComparableTimSort {
         // If array is small, do a "mini-TimSort" with no merges
         if (nRemaining < MIN_MERGE) {
             int initRunLen = countRunAndMakeAscending(a, lo, hi);
+            //二分查找排序，优化后的插入排序，前面有序，则可以直接通过二分查找找的该位置，然后后移
             binarySort(a, lo, hi, lo + initRunLen);
             return;
         }

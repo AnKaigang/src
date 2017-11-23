@@ -35,6 +35,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
+ * 用于操作集合类的工具类
+ * 除常用操作外，还可以构建 单例、不可修改、线程同步、空元素、不可为空、有序的集合类
  * This class consists exclusively of static methods that operate on or return
  * collections.  It contains polymorphic algorithms that operate on
  * collections, "wrappers", which return a new collection backed by a
@@ -137,6 +139,7 @@ public class Collections {
     }
 
     /**
+     * 调用list本身自带的排序方法
      * Sorts the specified list according to the order induced by the
      * specified comparator.  All elements in the list must be <i>mutually
      * comparable</i> using the specified comparator (that is,
@@ -170,6 +173,7 @@ public class Collections {
 
 
     /**
+     * 二分查找某个元素
      * Searches the specified list for the specified object using the binary
      * search algorithm.  The list must be sorted into ascending order
      * according to the {@linkplain Comparable natural ordering} of its
@@ -195,6 +199,7 @@ public class Collections {
      * elements in the list are less than the specified key.  Note
      * that this guarantees that the return value will be &gt;= 0 if
      * and only if the key is found.
+     * 如果实现了RandowAccess接口，则使用for遍历，否则使用迭代器
      * @throws ClassCastException if the list contains elements that are not
      *                            <i>mutually comparable</i> (for example, strings and
      *                            integers), or the search key is not mutually comparable
@@ -208,6 +213,14 @@ public class Collections {
             return Collections.iteratorBinarySearch(list, key);
     }
 
+    /**
+     * 二分查找某个元素的位置
+     *
+     * @param list
+     * @param key
+     * @param <T>
+     * @return
+     */
     private static <T>
     int indexedBinarySearch(List<? extends Comparable<? super T>> list, T key) {
         int low = 0;
@@ -228,6 +241,14 @@ public class Collections {
         return -(low + 1);  // key not found
     }
 
+    /**
+     * 二分查找某个元素的迭代器位置
+     *
+     * @param list
+     * @param key
+     * @param <T>
+     * @return
+     */
     private static <T>
     int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key) {
         int low = 0;
@@ -250,6 +271,7 @@ public class Collections {
     }
 
     /**
+     * 从迭代器中获取指定位置元素
      * Gets the ith element from the given list by repositioning the specified
      * list listIterator.
      */
@@ -269,6 +291,7 @@ public class Collections {
     }
 
     /**
+     * 二分查找，只不过指定比较方法
      * Searches the specified list for the specified object using the binary
      * search algorithm.  The list must be sorted into ascending order
      * according to the specified comparator (as by the
@@ -354,6 +377,7 @@ public class Collections {
     }
 
     /**
+     * 倒置list，采用的仅仅是这般交换而已
      * Reverses the order of the elements in the specified list.<p>
      * <p>
      * This method runs in linear time.
@@ -420,6 +444,7 @@ public class Collections {
     private static Random r;
 
     /**
+     * 将list随机打乱
      * Randomly permute the specified list using the specified source of
      * randomness.  All permutations occur with equal likelihood
      * assuming that the source of randomness is fair.<p>
@@ -468,6 +493,7 @@ public class Collections {
     }
 
     /**
+     * 交换两个位置元素
      * Swaps the elements at the specified positions in the specified list.
      * (If the specified positions are equal, invoking this method leaves
      * the list unchanged.)
@@ -499,6 +525,7 @@ public class Collections {
     }
 
     /**
+     * 使用一个元素obj填充整个list
      * Replaces all of the elements of the specified list with the specified
      * element. <p>
      * <p>
@@ -526,6 +553,7 @@ public class Collections {
     }
 
     /**
+     * 将src中所有的元素拷贝至dest中
      * Copies all of the elements from one list into another.  After the
      * operation, the index of each copied element in the destination list
      * will be identical to its index in the source list.  The destination
@@ -562,6 +590,7 @@ public class Collections {
     }
 
     /**
+     * 查找最小元素，遍历出来的
      * Returns the minimum element of the given collection, according to the
      * <i>natural ordering</i> of its elements.  All elements in the
      * collection must implement the <tt>Comparable</tt> interface.
@@ -708,6 +737,7 @@ public class Collections {
     }
 
     /**
+     * 循环迁移n个位置
      * Rotates the elements in the specified list by the specified distance.
      * After calling this method, the element at index <tt>i</tt> will be
      * the element previously at index <tt>(i - distance)</tt> mod
@@ -808,6 +838,7 @@ public class Collections {
     }
 
     /**
+     * 将list中所有的old替换为new元素
      * Replaces all occurrences of one specified value in a list with another.
      * More formally, replaces with <tt>newVal</tt> each element <tt>e</tt>
      * in <tt>list</tt> such that
@@ -867,6 +898,7 @@ public class Collections {
     }
 
     /**
+     * 查找子串，不知道为什么不用kmp
      * Returns the starting position of the first occurrence of the specified
      * target list within the specified source list, or -1 if there is no
      * such occurrence.  More formally, returns the lowest index <tt>i</tt>
@@ -980,6 +1012,7 @@ public class Collections {
     // Unmodifiable Wrappers
 
     /**
+     * 返回一个不可修改list，厉害了，内置对象
      * Returns an unmodifiable view of the specified collection.  This method
      * allows modules to provide users with "read-only" access to internal
      * collections.  Query operations on the returned collection "read through"
@@ -1006,6 +1039,8 @@ public class Collections {
     }
 
     /**
+     * 不可修改list对象
+     *
      * @serial include
      */
     static class UnmodifiableCollection<E> implements Collection<E>, Serializable {
@@ -1144,6 +1179,8 @@ public class Collections {
     }
 
     /**
+     * 不可修改set对象
+     *
      * @serial include
      */
     static class UnmodifiableSet<E> extends UnmodifiableCollection<E>
@@ -1185,6 +1222,8 @@ public class Collections {
     }
 
     /**
+     * 不可修改SortedSet对象
+     *
      * @serial include
      */
     static class UnmodifiableSortedSet<E>
@@ -2151,6 +2190,7 @@ public class Collections {
     // Synch Wrappers
 
     /**
+     * 线程同步list对象
      * Returns a synchronized (thread-safe) collection backed by the specified
      * collection.  In order to guarantee serial access, it is critical that
      * <strong>all</strong> access to the backing collection is accomplished
@@ -3473,6 +3513,8 @@ public class Collections {
     }
 
     /**
+     * 不可为空Collection对象
+     *
      * @serial include
      */
     static class CheckedCollection<E> implements Collection<E>, Serializable {
@@ -4864,6 +4906,9 @@ public class Collections {
         return (Iterator<T>) EmptyIterator.EMPTY_ITERATOR;
     }
 
+    /**
+     * 空的迭代器，但是不为null，只是没有元素
+     */
     private static class EmptyIterator<E> implements Iterator<E> {
         static final EmptyIterator<Object> EMPTY_ITERATOR
                 = new EmptyIterator<>();
