@@ -41,6 +41,7 @@ import sun.util.calendar.Gregorian;
 import sun.util.calendar.ZoneInfo;
 
 /**
+ * 日期类
  * The class <code>Date</code> represents a specific instant
  * in time, with millisecond precision.
  * <p>

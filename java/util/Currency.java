@@ -46,6 +46,7 @@ import sun.util.logging.PlatformLogger;
 
 
 /**
+ * 获取国家货币等
  * Represents a currency. Currencies are identified by their ISO 4217 currency
  * codes. Visit the <a href="http://www.iso.org/iso/home/standards/currency_codes.htm">
  * ISO web site</a> for more information.
