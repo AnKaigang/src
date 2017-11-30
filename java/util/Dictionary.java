@@ -26,6 +26,7 @@
 package java.util;
 
 /**
+ * 它是所有键值类的抽象类。。。厉害了
  * The <code>Dictionary</code> class is the abstract parent of any
  * class, such as <code>Hashtable</code>, which maps keys to values.
  * Every key and every value is an object. In any one <tt>Dictionary</tt>

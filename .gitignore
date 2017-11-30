@@ -2,3 +2,5 @@
 .gitignore
 .idea/inspectionProfiles/
 /out
+.idea/
+.idea/workspace.xml

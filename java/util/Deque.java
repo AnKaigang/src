@@ -36,6 +36,7 @@
 package java.util;
 
 /**
+ * 双端队列，即一个队列的首尾均可以操作
  * A linear collection that supports element insertion and removal at
  * both ends.  The name <i>deque</i> is short for "double ended queue"
  * and is usually pronounced "deck".  Most {@code Deque}

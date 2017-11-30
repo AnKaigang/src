@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 import sun.misc.SharedSecrets;
 
 /**
+ * 枚举Map，根据给定Enum中的index存储到指定的位置中，数组的直取，很快的哟
  * A specialized {@link Map} implementation for use with enum type keys.  All
  * of the keys in an enum map must come from a single enum type that is
  * specified, explicitly or implicitly, when the map is created.  Enum maps
