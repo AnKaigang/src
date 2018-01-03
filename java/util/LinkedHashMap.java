@@ -31,6 +31,9 @@ import java.util.function.BiFunction;
 import java.io.IOException;
 
 /**
+ * 有序的，指的是遍历和顺序和插入的顺序相同。
+ * 实现不同于HashMap，我是一个双向链表。
+ * 如果插入相同的key，顺序不受影响
  * <p>Hash table and linked list implementation of the <tt>Map</tt> interface,
  * with predictable iteration order.  This implementation differs from
  * <tt>HashMap</tt> in that it maintains a doubly-linked list running through
@@ -42,11 +45,11 @@ import java.io.IOException;
  * <tt>m.containsKey(k)</tt> would return <tt>true</tt> immediately prior to
  * the invocation.)
  *
- * <p>This implementation spares its clients from the unspecified, generally
- * chaotic ordering provided by {@link HashMap} (and {@link Hashtable}),
+ * <p>This implementation spares(备份) its clients from the unspecified(未指明), generally
+ * chaotic(无序的) ordering provided by {@link HashMap} (and {@link Hashtable}),
  * without incurring the increased cost associated with {@link TreeMap}.  It
  * can be used to produce a copy of a map that has the same order as the
- * original, regardless of the original map's implementation:
+ * original, regardless(不管) of the original map's implementation:
  * <pre>
  *     void foo(Map m) {
  *         Map copy = new LinkedHashMap(m);

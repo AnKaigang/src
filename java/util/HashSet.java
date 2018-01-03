@@ -28,12 +28,14 @@ package java.util;
 import java.io.InvalidObjectException;
 
 /**
+ * 实现自Set接口、由hashMap支持、无序、允许为空
  * This class implements the <tt>Set</tt> interface, backed by a hash table
  * (actually a <tt>HashMap</tt> instance).  It makes no guarantees as to the
  * iteration order of the set; in particular, it does not guarantee that the
  * order will remain constant over time.  This class permits the <tt>null</tt>
  * element.
  *
+ * 基本增删查表现O(1)、
  * <p>This class offers constant time performance for the basic operations
  * (<tt>add</tt>, <tt>remove</tt>, <tt>contains</tt> and <tt>size</tt>),
  * assuming the hash function disperses the elements properly among the
@@ -43,6 +45,7 @@ import java.io.InvalidObjectException;
  * buckets).  Thus, it's very important not to set the initial capacity too
  * high (or the load factor too low) if iteration performance is important.
  *
+ * 线程不安全
  * <p><strong>Note that this implementation is not synchronized.</strong>
  * If multiple threads access a hash set concurrently, and at least one of
  * the threads modifies the set, it <i>must</i> be synchronized externally.
@@ -92,9 +95,11 @@ public class HashSet<E>
 {
     static final long serialVersionUID = -5024744406713321676L;
 
+    //从这里看出来，真的是基于hashMap的。就很皮
     private transient HashMap<E,Object> map;
 
     // Dummy value to associate with an Object in the backing Map
+    //哈哈，这个厉害了。因为是基于HashMap的，map有key和value，但是set只需要一个，所以就得需要一个假的value
     private static final Object PRESENT = new Object();
 
     /**
@@ -145,6 +150,7 @@ public class HashSet<E>
     }
 
     /**
+     * 玛德，竟然还有有序的，厉害了
      * Constructs a new, empty linked hash set.  (This package private
      * constructor is only used by LinkedHashSet.) The backing
      * HashMap instance is a LinkedHashMap with the specified initial

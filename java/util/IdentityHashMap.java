@@ -31,6 +31,9 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
+ * 继承了Map接口、
+ * 使用引用相等性替换了实体相等性。即，key比较时使用'=='替换'equals()'方法
+ * 并且key和value存储在同一数组中，低位放key，高位放value
  * This class implements the <tt>Map</tt> interface with a hash table, using
  * reference-equality in place of object-equality when comparing keys (and
  * values).  In other words, in an <tt>IdentityHashMap</tt>, two keys
@@ -39,6 +42,7 @@ import java.util.function.Consumer;
  * <tt>HashMap</tt>) two keys <tt>k1</tt> and <tt>k2</tt> are considered equal
  * if and only if <tt>(k1==null ? k2==null : k1.equals(k2))</tt>.)
  *
+ * 这个类不是一个普通的Map接口实现。当比较两个数据相等时，他故意违反了约定。
  * <p><b>This class is <i>not</i> a general-purpose <tt>Map</tt>
  * implementation!  While this class implements the <tt>Map</tt> interface, it
  * intentionally violates <tt>Map's</tt> general contract, which mandates the
