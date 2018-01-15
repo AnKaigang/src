@@ -100,6 +100,7 @@ import java.io.IOException;
  * than for <tt>HashMap</tt>, as iteration times for this class are unaffected
  * by capacity.
  *
+ * 不是线程安全的
  * <p><strong>Note that this implementation is not synchronized.</strong>
  * If multiple threads access a linked hash map concurrently, and at least
  * one of the threads modifies the map structurally, it <em>must</em> be
@@ -212,6 +213,7 @@ public class LinkedHashMap<K,V>
     transient LinkedHashMap.Entry<K,V> tail;
 
     /**
+     * 迭代器的顺序，true就是访问顺序，false就是插入顺序
      * The iteration ordering method for this linked hash map: <tt>true</tt>
      * for access-order, <tt>false</tt> for insertion-order.
      *
@@ -221,7 +223,7 @@ public class LinkedHashMap<K,V>
 
     // internal utilities
 
-    // link at the end of list
+    // link at the end of list 将p挂在链表最后
     private void linkNodeLast(LinkedHashMap.Entry<K,V> p) {
         LinkedHashMap.Entry<K,V> last = tail;
         tail = p;
@@ -233,7 +235,7 @@ public class LinkedHashMap<K,V>
         }
     }
 
-    // apply src's links to dst
+    // apply src's links to dst，将src替换为到dst中
     private void transferLinks(LinkedHashMap.Entry<K,V> src,
                                LinkedHashMap.Entry<K,V> dst) {
         LinkedHashMap.Entry<K,V> b = dst.before = src.before;
@@ -248,13 +250,14 @@ public class LinkedHashMap<K,V>
             a.before = dst;
     }
 
-    // overrides of HashMap hook methods
+    // overrides of HashMap hook methods，我去，这就给清空了，很魔性
 
     void reinitialize() {
         super.reinitialize();
         head = tail = null;
     }
 
+    //新建一个Node，并且把Node挂在链表最后
     Node<K,V> newNode(int hash, K key, V value, Node<K,V> e) {
         LinkedHashMap.Entry<K,V> p =
             new LinkedHashMap.Entry<K,V>(hash, key, value, e);
@@ -262,6 +265,7 @@ public class LinkedHashMap<K,V>
         return p;
     }
 
+    //将p替换为t
     Node<K,V> replacementNode(Node<K,V> p, Node<K,V> next) {
         LinkedHashMap.Entry<K,V> q = (LinkedHashMap.Entry<K,V>)p;
         LinkedHashMap.Entry<K,V> t =
@@ -270,12 +274,14 @@ public class LinkedHashMap<K,V>
         return t;
     }
 
+    //在屁股上添加一个新节点
     TreeNode<K,V> newTreeNode(int hash, K key, V value, Node<K,V> next) {
         TreeNode<K,V> p = new TreeNode<K,V>(hash, key, value, next);
         linkNodeLast(p);
         return p;
     }
 
+    //将Node换位TreeNode？
     TreeNode<K,V> replacementTreeNode(Node<K,V> p, Node<K,V> next) {
         LinkedHashMap.Entry<K,V> q = (LinkedHashMap.Entry<K,V>)p;
         TreeNode<K,V> t = new TreeNode<K,V>(q.hash, q.key, q.value, next);
@@ -283,6 +289,7 @@ public class LinkedHashMap<K,V>
         return t;
     }
 
+    //移除节点e
     void afterNodeRemoval(Node<K,V> e) { // unlink
         LinkedHashMap.Entry<K,V> p =
             (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
@@ -297,6 +304,7 @@ public class LinkedHashMap<K,V>
             a.before = b;
     }
 
+    //移走最久未使用的数据
     void afterNodeInsertion(boolean evict) { // possibly remove eldest
         LinkedHashMap.Entry<K,V> first;
         if (evict && (first = head) != null && removeEldestEntry(first)) {
@@ -305,6 +313,7 @@ public class LinkedHashMap<K,V>
         }
     }
 
+    //如果是访问顺序的话，将被访问的Node移至尾部
     void afterNodeAccess(Node<K,V> e) { // move node to last
         LinkedHashMap.Entry<K,V> last;
         if (accessOrder && (last = tail) != e) {
@@ -330,6 +339,7 @@ public class LinkedHashMap<K,V>
         }
     }
 
+    //写入流
     void internalWriteEntries(java.io.ObjectOutputStream s) throws IOException {
         for (LinkedHashMap.Entry<K,V> e = head; e != null; e = e.after) {
             s.writeObject(e.key);
@@ -338,6 +348,7 @@ public class LinkedHashMap<K,V>
     }
 
     /**
+     * 默认是插入顺序
      * Constructs an empty insertion-ordered <tt>LinkedHashMap</tt> instance
      * with the specified initial capacity and load factor.
      *
@@ -352,6 +363,7 @@ public class LinkedHashMap<K,V>
     }
 
     /**
+     * 默认是插入顺序
      * Constructs an empty insertion-ordered <tt>LinkedHashMap</tt> instance
      * with the specified initial capacity and a default load factor (0.75).
      *
@@ -364,6 +376,7 @@ public class LinkedHashMap<K,V>
     }
 
     /**
+     * 默认是插入顺序
      * Constructs an empty insertion-ordered <tt>LinkedHashMap</tt> instance
      * with the default initial capacity (16) and load factor (0.75).
      */
@@ -373,6 +386,7 @@ public class LinkedHashMap<K,V>
     }
 
     /**
+     * 默认是插入顺序
      * Constructs an insertion-ordered <tt>LinkedHashMap</tt> instance with
      * the same mappings as the specified map.  The <tt>LinkedHashMap</tt>
      * instance is created with a default load factor (0.75) and an initial
@@ -388,6 +402,7 @@ public class LinkedHashMap<K,V>
     }
 
     /**
+     * 终于找到一个不默认访问顺序的，啦啦啦
      * Constructs an empty <tt>LinkedHashMap</tt> instance with the
      * specified initial capacity, load factor and ordering mode.
      *
@@ -407,6 +422,8 @@ public class LinkedHashMap<K,V>
 
 
     /**
+     * todo 为什么只比较value？？？key呢？
+     *
      * Returns <tt>true</tt> if this map maps one or more keys to the
      * specified value.
      *

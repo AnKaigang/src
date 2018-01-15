@@ -26,6 +26,7 @@
 package java.util;
 
 /**
+ * 双向链表，插入有序
  * <p>Hash table and linked list implementation of the <tt>Set</tt> interface,
  * with predictable iteration order.  This implementation differs from
  * <tt>HashSet</tt> in that it maintains a doubly-linked list running through

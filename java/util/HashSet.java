@@ -150,7 +150,8 @@ public class HashSet<E>
     }
 
     /**
-     * 玛德，竟然还有有序的，厉害了
+     * 玛德，竟然还有插入有序的，厉害了
+     * 第二次写：废话，没看到是基于LinkedHashMap么！！！
      * Constructs a new, empty linked hash set.  (This package private
      * constructor is only used by LinkedHashSet.) The backing
      * HashMap instance is a LinkedHashMap with the specified initial
