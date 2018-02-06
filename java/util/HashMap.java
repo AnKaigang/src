@@ -413,7 +413,7 @@ public class HashMap<K, V> extends AbstractMap<K, V>
      */
     static final int tableSizeFor(int cap) {
         int n = cap - 1;
-        //n变成n与n右移一位之后异或后的值，经过几次之后，把高位从第一个1开始，后面的31位都变成1，
+        //n变成n与n右移一位之后或后的值，经过几次之后，把高位从第一个1开始，后面的31位都变成1，
 
         n |= n >>> 1;
         n |= n >>> 2;
@@ -2257,8 +2257,8 @@ public class HashMap<K, V> extends AbstractMap<K, V>
          * see above discussion about split bits and indices.
          *
          * @param map   the map
-         * @param tab   the table for recording bin heads
-         * @param index the index of the table being split
+         * @param tab   the table for recording bin heads 新的table
+         * @param index the index of the table being split 当前位置table[j]
          * @param bit   the bit of hash to split on 旧的桶容量
          */
         final void split(HashMap<K, V> map, Node<K, V>[] tab, int index, int bit) {

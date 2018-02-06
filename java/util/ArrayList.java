@@ -30,6 +30,10 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 /**
+ * 可变长数组
+ * 实现了接口中所有方法
+ * 允许为null
+ * 这个类和Vector很像。。但不是线程同步的
  * Resizable-array implementation of the <tt>List</tt> interface.  Implements
  * all optional list operations, and permits all elements, including
  * <tt>null</tt>.  In addition to implementing the <tt>List</tt> interface,

@@ -33,6 +33,8 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 /**
+ * 线程不安全的
+ * 自增长
  * This class implements a vector of bits that grows as needed. Each
  * component of the bit set has a {@code boolean} value. The
  * bits of a {@code BitSet} are indexed by nonnegative integers.
@@ -106,6 +108,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
     private static final long serialVersionUID = 7997698588986878753L;
 
     /**
+     * 根据bit的索引，返回他所属的long数组的索引
      * Given a bit index, return word index containing it.
      */
     private static int wordIndex(int bitIndex) {
@@ -122,6 +125,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
     }
 
     /**
+     * 重新计算在使用中的bit
      * Sets the field wordsInUse to the logical size in words of the bit set.
      * WARNING:This method assumes that the number of words actually in use is
      * less than or equal to the current value of wordsInUse!
@@ -137,6 +141,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
     }
 
     /**
+     * 使用默认值创建bit集合。默认值全为0，即64个0
      * Creates a new bit set. All bits are initially {@code false}.
      */
     public BitSet() {
@@ -218,11 +223,13 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @since 1.7
      */
     public static BitSet valueOf(LongBuffer lb) {
+        //获取剩余未读buffer
         lb = lb.slice();
-        int n;
+        int n;//n初始化为lb中未读的总长度
         for (n = lb.remaining(); n > 0 && lb.get(n - 1) == 0; n--)
             ;
         long[] words = new long[n];
+        //将buffer赋值到long数组中
         lb.get(words);
         return new BitSet(words);
     }

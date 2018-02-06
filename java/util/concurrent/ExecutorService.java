@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Collection;
 
 /**
+ * 线程池接口，提供了对于线程池的规范
  * An {@link Executor} that provides methods to manage termination and
  * methods that can produce a {@link Future} for tracking progress of
  * one or more asynchronous tasks.

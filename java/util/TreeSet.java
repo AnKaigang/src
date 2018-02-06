@@ -26,6 +26,7 @@
 package java.util;
 
 /**
+ * 基于TreeMap的，就先不看了吧
  * A {@link NavigableSet} implementation based on a {@link TreeMap}.
  * The elements are ordered using their {@linkplain Comparable natural
  * ordering}, or by a {@link Comparator} provided at set creation

@@ -38,6 +38,11 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 /**
+ * 实现自Deque接口的可变长数组
+ * 对空间要求没有限制，因为能自增长
+ * 线程不安全
+ * 比栈快
+ * 比LinkedList快
  * Resizable-array implementation of the {@link Deque} interface.  Array
  * deques have no capacity restrictions; they grow as necessary to support
  * usage.  They are not thread-safe; in the absence of external
@@ -46,6 +51,7 @@ import java.util.function.Consumer;
  * {@link Stack} when used as a stack, and faster than {@link LinkedList}
  * when used as a queue.
  *
+ * 复杂度O(n)
  * <p>Most {@code ArrayDeque} operations run in amortized constant time.
  * Exceptions include {@link #remove(Object) remove}, {@link
  * #removeFirstOccurrence removeFirstOccurrence}, {@link #removeLastOccurrence
@@ -119,6 +125,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     // ******  Array allocation and resizing utilities ******
 
     /**
+     * 初始化大小必须是   2 的次方
      * Allocates empty array to hold the given number of elements.
      *
      * @param numElements  the number of elements to hold
@@ -143,6 +150,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     }
 
     /**
+     * 2倍扩容策略
      * Doubles the capacity of this deque.  Call only when full, i.e.,
      * when head and tail have wrapped around to become equal.
      */

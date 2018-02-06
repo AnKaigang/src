@@ -26,9 +26,11 @@
 package java.util;
 
 /**
+ * 实现了Collection接口；并最小化接口实现
  * This class provides a skeletal implementation of the <tt>Collection</tt>
  * interface, to minimize the effort required to implement this interface. <p>
  *
+ * 为了实现不可修改集合，开发者需要继承该类，并提供迭代器和size抽象方法。而且迭代器必须有hasNext和next方法
  * To implement an unmodifiable collection, the programmer needs only to
  * extend this class and provide implementations for the <tt>iterator</tt> and
  * <tt>size</tt> methods.  (The iterator returned by the <tt>iterator</tt>

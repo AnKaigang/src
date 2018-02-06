@@ -38,11 +38,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.Collection;
 
 /**
+ * 可重入锁(公平、不公平)
+ *
  * A reentrant mutual exclusion {@link Lock} with the same basic
  * behavior and semantics as the implicit monitor lock accessed using
  * {@code synchronized} methods and statements, but with extended
  * capabilities.
  *
+ * 锁如果未被其他线程占用，则当前线程会获取该锁。
+ * 当前线程可通过isHeldByCurrentThread来监测是否获得了锁
  * <p>A {@code ReentrantLock} is <em>owned</em> by the thread last
  * successfully locking, but not yet unlocking it. A thread invoking
  * {@code lock} will return, successfully acquiring the lock, when
@@ -51,6 +55,9 @@ import java.util.Collection;
  * be checked using methods {@link #isHeldByCurrentThread}, and {@link
  * #getHoldCount}.
  *
+ * 锁的构造函数，有一个参数：fairness，是否公平
+ * true：锁很保证等待时间最长的线程优先获取锁。但是性能不行，因为当线程获取到锁的时候，该线程可能处于等待或者阻塞状态
+ * false：不保证获取锁的线程优先级是根据等待时间排序。性能较好
  * <p>The constructor for this class accepts an optional
  * <em>fairness</em> parameter.  When set {@code true}, under
  * contention, locks favor granting access to the longest-waiting
@@ -64,6 +71,7 @@ import java.util.Collection;
  * fair lock may obtain it multiple times in succession while other
  * active threads are not progressing and not currently holding the
  * lock.
+ * ！！！！！！并且，tryLock()方法或忽略锁的公平性，直接获取！！！！！！！1
  * Also note that the untimed {@link #tryLock()} method does not
  * honor the fairness setting. It will succeed if the lock
  * is available even if other threads are waiting.
@@ -92,10 +100,12 @@ import java.util.Collection;
  * methods for inspecting the state of the lock.  Some of these
  * methods are only useful for instrumentation and monitoring.
  *
+ * 序列化的时候，不会序列化state
  * <p>Serialization of this class behaves in the same way as built-in
  * locks: a deserialized lock is in the unlocked state, regardless of
  * its state when serialized.
  *
+ * 同一个线程最大只能重入2147483647锁，如果超过这个限制，就会ERROR
  * <p>This lock supports a maximum of 2147483647 recursive locks by
  * the same thread. Attempts to exceed this limit result in
  * {@link Error} throws from locking methods.
@@ -109,6 +119,8 @@ public class ReentrantLock implements Lock, java.io.Serializable {
     private final Sync sync;
 
     /**
+     * 排队队列，和信号量。
+     * 公平锁和非公平锁都是基于他实现的。
      * Base of synchronization control for this lock. Subclassed
      * into fair and nonfair versions below. Uses AQS state to
      * represent the number of holds on the lock.
